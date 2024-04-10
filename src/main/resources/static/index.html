@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Saludo desde Spring</title>
+</head>
+<body>
+    <h1>Saludo desde Spring</h1>
+    <form id="saludoForm">
+        <label for="name">Ingrese su nombre:</label>
+        <input type="text" id="name" name="name">
+        <button type="submit">Enviar</button>
+    </form>
+    <div id="saludo"></div>
+
+    <script>
+        document.getElementById('saludoForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            var nombre = document.getElementById('name').value;
+            fetch('/hola?name=' + encodeURIComponent(nombre))
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('saludo').innerText = data;
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    document.getElementById('saludo').innerText = 'Error al obtener el saludo.';
+                });
+        });
+    </script>
+</body>
+</html>
